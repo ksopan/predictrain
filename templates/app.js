@@ -246,23 +246,58 @@ function getPrediction(minTemp, maxTemp, rainfall, evaporation, sunshine,
         url3 = `${pressure3}/${cloud9}/${cloud3}/${temp9}/${temp3}/${rainToday}/${windGustDir}/`
         url4 = `${windDir9}/${windDir3}`
         url = url1 + url2 + url3 + url4
-        console.log(url)
+        console.log("SOPAN_"+url)
 
-        var result = d3.json(url).then(function(result_data){
+         fetch(url).then(response => {
+              if (!response.ok) {
+            console.log("RESPONSE is :"+response);
+                throw new Error("unable to fetch");
+            }
+            return response.json();
+        }).then(result_data => {
+
             var mvlr = result_data.MVLR
             var knn = result_data.KNN
             var rf = result_data.RF
             var svm = result_data.SVM
             var agg = result_data.AGG
-
+            console.log(result_data);
 
             document.getElementById("overall").innerHTML = `Aggregate Prediction: ${agg}`
             document.getElementById("mvlr").innerHTML = `MVLR: ${mvlr}`
             document.getElementById("knn").innerHTML = `KNN: ${knn}`
             document.getElementById("rf").innerHTML = `Random Forest: ${rf}`
             document.getElementById("svm").innerHTML = `SVM: ${svm}`
- //           document.getElementById("sum").innerHTML = 'Machine Learning Method and corresponding prediction'
-
         })
     }
+
+    
+// function getPrediction(minTemp, maxTemp, rainfall, evaporation, sunshine,
+//     windGustSpeed, windSpeed9, windSpeed3, humidity9, humidity3, pressure9,
+//     pressure3, cloud9, cloud3, temp9, temp3, rainToday, windGustDir,
+//     windDir9, windDir3){
+//         url1 = `/predict/${minTemp}/${maxTemp}/${rainfall}/${evaporation}/${sunshine}/`
+//         url2 = `${windGustSpeed}/${windSpeed9}/${windSpeed3}/${humidity9}/${humidity3}/${pressure9}/`
+//         url3 = `${pressure3}/${cloud9}/${cloud3}/${temp9}/${temp3}/${rainToday}/${windGustDir}/`
+//         url4 = `${windDir9}/${windDir3}`
+//         url = url1 + url2 + url3 + url4
+//         console.log(url)
+
+//         var result = d3.json(url).then(function(result_data){
+//             var mvlr = result_data.MVLR
+//             var knn = result_data.KNN
+//             var rf = result_data.RF
+//             var svm = result_data.SVM
+//             var agg = result_data.AGG
+
+
+//             document.getElementById("overall").innerHTML = `Aggregate Prediction: ${agg}`
+//             document.getElementById("mvlr").innerHTML = `MVLR: ${mvlr}`
+//             document.getElementById("knn").innerHTML = `KNN: ${knn}`
+//             document.getElementById("rf").innerHTML = `Random Forest: ${rf}`
+//             document.getElementById("svm").innerHTML = `SVM: ${svm}`
+//  //           document.getElementById("sum").innerHTML = 'Machine Learning Method and corresponding prediction'
+
+//         })
+//     }
 
