@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title class="card-title">Will it rain tomorrow -- ML predictions</title>
+        <!-- <link rel="stylesheet" href="style.css"> -->
+        <!-- we can use some css if we want -->
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    </head>
+<body>
+
+    <nav class="py-2 bg-light border-bottom">
+        <div class="container d-flex flex-wrap">
+          <ul class="nav me-auto">
+            <li class="nav-item"><a href="#" class="nav-link link-dark px-2 active" aria-current="page">Rain</a></li>
+          </ul>
+          <ul class="nav">
+            <li class="nav-item"><a href="kurkute.sopan@gmail.com" class="nav-link link-dark px-2">Contact me</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container pb-3 weather-container">
+        <div class="mb-4 bg-light rounded-3">
+            <div class="container-fluid py-3">
+              <h1 class="display-6 fw-bold">About App</h1>
+              <p class="col-md-12 fs-5">The demo App developed using Python-Flask and Plotly framework for acquiring meteorological sensor data for agriculture purpose. The app uses K-nearest neighbour (<b>KNN</b>), Support Machine vector (<b>SVM</b>), multivariate linear regression (<b>MVLR</b>) and Random Forest (<b>RF</b>) machine learning algorhms for predicting next day <i>Precipitation</i> by providing current or todays weather.<br>The app is still in the development phase, new featrures and updated ML algorithms will be added subsequently.<br><sup>Note:</sup><small>All codes, trained models, sample datasets, and Python Flask app codes are provided on github</small></p>
+            </div>
+        </div>
+        <div class="mb-4 bg-light rounded-3 d-grid gap-3" style="grid-template-columns: 1fr 1fr 1fr;">
+            <div class="bg-light border rounded-3 weather-box-header"><h6>Select today's Weather condition </h6></div>
+            <a type="button" id="myButton" class="btn btn-weather">Sensor Data plots</a>
+            <!--  <div class="bg-light border rounded-3 weather-box-header"><button id="submitButton" onClick="DisplayPlots()" type="button" class="btn btn-weather"> Sensor Data plots</h6> </div> -->
+            <div class="bg-light border rounded-3 weather-box-header">
+                <button id="submitButton" onclick="myFunction()" type="button" class="btn btn-weather">Click Here !! If it will rain tomorrow ?</button>
+            </div>
+        </div>
+        <div class="d-grid gap-3" style="grid-template-columns: 1fr 1fr 1fr;">
+          <div class="bg-light border rounded-3 weather-box">
+            <table class="table table-borderless">
+            <tr>
+                <td>Min Temp:</td>
+                <td><select id='min_temp' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+            </tr>
+            <tr>
+                <td>Max Temp:</td>
+                <td><select id='max_temp' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+            </tr>
+            <tr>
+                <td>Rainfall: </td>
+                <td><select id='rainfall' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+            </tr>
+            <tr>
+                <td>Evaporation:</td>
+                <td><select id='Evaporation' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+            </tr>
+            <tr>
+                <td>Sunshine:</td>
+                <td><select id='Sunshine' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+            </tr>
+            <tr>
+                <td>Wind Gust Speed:</td>
+                <td><select id='WindGustSpeed' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+            </tr>
+            <tr>
+                <td>Wind Speed 9 AM</td>
+                <td><select id='wind_speed_9a' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+            </tr>
+            <tr>
+                <td>Wind Speed 3 PM</td>
+                <td><select id='wind_speed_3' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+            </tr>
+            <tr>
+                <td>Hummidity 9 AM</td>
+                <td><select id='Hummidity_9' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+            </tr>
+            <tr>
+                <td>Humidity 3 PM</td>
+                <td><select id='Hummidity_3' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+            </tr>
+            </table>
+          </div>
+          <div class="bg-light border rounded-3 weather-box">
+            <table class="table table-borderless">
+                <tr>
+                    <td>Pressure 9 AM:</td>
+                    <td><select id='pressure_9' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+                </tr>
+                <tr>
+                    <td>Pressure 3 PM:</td>
+                    <td><select id='pressure_3' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+                </tr>
+                <tr>
+                    <td>Clouds 9 AM:</td>
+                    <td><select id='cloud_9' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+                </tr>
+                <tr>
+                    <td>Clouds 3 PM:</td>
+                    <td><select id='cloud_3' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+                </tr>
+                <tr>
+                    <td>Tempeture 9 AM:</td>
+                    <td><select id='temp_9' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+                </tr>
+                <tr>
+                    <td>Tempeture 3 PM:</td>
+                    <td><select id='temp_3' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+                </tr>
+                <tr>
+                    <td>Wind Gust Direction:</td>
+                    <td><select id='wind_gust_dir' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+                </tr>
+                <tr>
+                    <td>Wind Direction 9 AM:</td>
+                    <td><select id='wind_direction_9' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+                </tr>
+                <tr>
+                    <td>Wind Direction 3 PM:</td>
+                    <td><select id='wind_direction_3' class="btn btn-secondary btn-sm dropdown-toggle"></select></td>
+                </tr>
+            </table>
+          </div>
+            <div class="bg-light border rounded-3 weather-box"><div>
+         <!--   <div>
+                <p class="weather-decide" id='sum'></p>
+            </div> -->
+            <div class="bg-light border rounded-3 weather-box ">
+                <h5>Machine learning method and predictions </h5>
+            </div>
+            <div class="weather-result">
+                <p class="weather-decide" id='overall'></p>
+            </div>
+            <div class="weather-result">
+                <p class="weather-decide" id='mvlr'></p>
+            </div>
+            <div class="weather-result">
+                <p class="weather-decide" id='knn'></p>
+            </div>
+            <div class="weather-result">
+                <p class="weather-decide" id='rf'></p>
+            </div>
+            <div class="weather-result">
+                <p class="weather-decide" id='svm'></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<div class='container'>
+    <div id="plotly-timeseries"></div>
+</div>
+<!-- end of column div -->    <!-- end row div -->
+</div><!--end container -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="./app.js"></script>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+<script>
+
+    //var aa = document.getElementById("svm");
+     var elem = document.getElementsByClassName('weather-decide');
+    console.log(elem);
+    // // // onclick="myFunction()"
+    function myFunction(){
+        var elem = document.getElementsByClassName('weather-decide');
+        for(var i =0; i < elem.length; i++)
+        {
+            var Str2 = "Yes";
+            var Str21 = Str2.replace(/\s+/g, "");
+
+            var Str1 = elem[i].innerText.split(':')[1];
+            var Str11 = Str1.replace(/\s+/g, "");
+            if(Str11 == Str21) {
+ //           if (Str1.replace(/\s+/g, "") == Str2.replace(/\s+/g, "")) {;
+            elem[i].style.color = 'blue';
+            console.log(elem[i].innerText.split(':')[1]);
+        } else {
+            elem[i].style.color = 'red';
+        }
+        }
+    }
+
+</script>
+
+<script>
+        var graph = {{ graphJSON | safe }};
+        var config = {responsive: true}
+        Plotly.plot('plotly-timeseries', graph, {});
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+<script>
+$("#myButton").click(function() {
+    $('html, body').animate({
+        scrollTop: $("#plotly-timeseries").offset().top
+    }, 20);
+});
+</script>
+
+</body>
+</html>
+
+
+

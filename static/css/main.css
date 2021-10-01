@@ -1,0 +1,41 @@
+.weather-container {
+    margin-top: 45px;
+}
+.weather-box {
+    padding: 25px;
+}
+
+.weather-box-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 7px;
+    text-align: center;
+}
+
+.weather-box-header h6 {
+    margin: 0!important;
+}
+.nav-link {
+    color: #981FB9;
+    font-weight: 700;
+}
+
+.btn-weather {
+    background-color:#b137d3;
+    color: #ffffff;
+}
+
+.btn-weather:hover {
+    background-color:#9c0cc4;
+    color: #ffffff;
+}
+
+.btn-weather:focus {
+    box-shadow: 0 0 0 0.25rem rgb(247 125 249 / 50%);
+}
+
+.weather-result p {
+  color:#344767;
+  font-weight:700;
+}

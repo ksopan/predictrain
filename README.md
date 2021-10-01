@@ -1,2 +1,2 @@
 # predictrain
-This is the rain predictor
+This is the Predict rain repository.
