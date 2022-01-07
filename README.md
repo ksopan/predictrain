@@ -4,7 +4,7 @@ Predicting reliable weather forecast is crucial for farming. By employing logist
 
 This app has been developed using Python-Flask libraries for GUI and accessing datasets while plotly-dash has been used for data plotting. 
 
-Built with with Python-Flask/Scikit-learn/Dash
+Built with Python-Flask/Scikit-learn/Dash
 
 
 # Getting Started
